@@ -11,7 +11,7 @@ export const Item = ({ product }) => {
     const nombre = useContext(useCartContext)
 
     const [goToCart, SetGoToCart] = useState(false)
-    const [addProduct] = useCartContext()
+    const {addProduct} = useCartContext()
 
 
     const onAdd= (quantity) => {
