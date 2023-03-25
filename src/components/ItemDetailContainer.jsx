@@ -23,30 +23,18 @@ const ItemDetailContainer = ({ product }) => {
     const { detalleid } = useParams
 
     
-
     const getData = (id) => {
       return new Promise (resolve => {
         const product = products.find(product => product.id === parseInt(id))
         setTimeout(() => {
         resolve(product);
             }, 2000);
-
-
-
-   useEffect(() => {
-     first
-   
-     return () => {
-       second
-     }
-   }, [third])
-   
-
-
-     
-
-      getData.then (res => setData(res.find(product => product.id === parseInt(detalleid))))
-    },[])
+    
+    
+    
+      useEffect(() => {
+      getData(detalleid).then (res => setData(res))
+      }, [detalleid])
 
 
   return (
