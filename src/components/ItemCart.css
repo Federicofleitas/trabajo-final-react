@@ -1,4 +1,4 @@
-.itemcart {
+.itemCart {
     display: flex;
     border-bottom: 1px solid red;
     max-width: 500px;
@@ -8,4 +8,5 @@
 .itemCart img {
     width: 200px;
     margin-right: 1rem;
+    text-align: center;
 }
