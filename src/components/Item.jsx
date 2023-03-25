@@ -14,7 +14,7 @@ export const Item = ({ product }) => {
                     <div class="card-body">
                         <h5 class="card-title">{product.title}</h5>
                         <p class="card-text">Precio $ {product.price}</p>
-                        <NavLink href="#" class="btn btn-secondary" to='/detalle'>Mas información</NavLink>
+                        <NavLink  class="btn btn-secondary" to={`/detalle/${product.id}`}>Mas información</NavLink>
                     </div>
             </div>
         </div>

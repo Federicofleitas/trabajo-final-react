@@ -1,14 +1,13 @@
-
-
 import React, {useEffect, useState } from 'react'
 import {useCartContext} from '../context/CartContext'
 import { Link, useParams } from 'react-router-dom'
 import ItemCount from './ItemCount';
 import { CartContext } from '../context/CartContext';
 import { ItemDetail } from './ItemDetail';
-import  products  from '../components/utils/getProducts'
+import getList from './utils/getProducts';
 
-const ItemDetailContainer = ({ product }) => {
+
+const ItemDetailContainer = () => {
 
   const [goToCart, SetGoToCart] = useState(false)
     const {addProduct} = useCartContext()
@@ -16,25 +15,21 @@ const ItemDetailContainer = ({ product }) => {
 
     const onAdd= (quantity) => {
         SetGoToCart(true)
-        addProduct(product, quantity)
+        addProduct(data, quantity)
     }
 
     const [data, setData] = useState({});
-    const { detalleid } = useParams
+    const { detalleid } = useParams()
 
     
-    const getData = (id) => {
-      return new Promise (resolve => {
-        const product = products.find(product => product.id === parseInt(id))
-        setTimeout(() => {
-        resolve(product);
-            }, 2000);
+
     
-    
-    
-      useEffect(() => {
-      getData(detalleid).then (res => setData(res))
-      }, [detalleid])
+
+
+   useEffect(()=>{
+    getList()
+    .then((res)=> setData(res.find((item)=> item.id === parseInt(detalleid))))
+   },[detalleid])
 
 
   return (

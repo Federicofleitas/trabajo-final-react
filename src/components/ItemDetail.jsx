@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const ItemDetail = (product) => {
+export const ItemDetail = ({data}) => {
   return (
    <>
-        <h2>Modelo: ${product.title}</h2>
-        <h3>Precio actual: ${product.price}</h3>
-        <h4>${product.description}</h4>
+        <h2>Modelo: {data.title}</h2>
+        <h3>Precio actual: ${data.price}</h3>
+        <h4>{data.description}</h4>
    </>
   )
 }

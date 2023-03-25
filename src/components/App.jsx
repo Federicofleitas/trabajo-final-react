@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Navbar from './Navbar'
@@ -24,7 +23,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<ItemListContainer greeting='Listado Vacio' />}/>
               <Route path='/cilindrada/:cilindradaId' element={<ItemListContainer greeting='Listado Vacio' />}/>
-              <Route path='/detalle' element={<ItemDetailContainer />}/>
+              <Route path='/detalle/:detalleid' element={<ItemDetailContainer />}/>
               <Route path='/nosotros' element={<AboutList />}/>
               <Route path='/cart' element={<Cart />}/>
             </Routes>
