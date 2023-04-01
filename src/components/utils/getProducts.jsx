@@ -73,4 +73,4 @@ useEffect (() => {
 }
 */
 
-export default getList;
+// export default getList;

@@ -4,8 +4,9 @@ import { Link, useParams } from 'react-router-dom'
 import ItemCount from './ItemCount';
 import { CartContext } from '../context/CartContext';
 import { ItemDetail } from './ItemDetail';
-import getList from './utils/getProducts';
-import { getFirestore, doc, getDoc} from 'firebase/firestore'
+
+import { getFirestore, doc, getDoc, collection} from 'firebase/firestore'
+import { db } from '../firebase/firebase';
 
 
 
@@ -26,14 +27,26 @@ const ItemDetailContainer = () => {
     const { detalleid } = useParams()
 
     
-
+    useEffect(()=>{
+      const coleccionProd = collection(db, "products")
+      const referenciaDoc = doc(coleccionProd,  detalleid)
+      getDoc(referenciaDoc)
+      .then((result)=>{
+        setData({
+          id:result.id,
+          ...result.data()
+        })
+      })
+      .catch((error)=> console.log(error))
+     
+    }, [detalleid])
     
 
 
-   useEffect(()=>{
-    getList()
-    .then((res)=> setData(res.find((item)=> item.id === parseInt(detalleid))))
-   },[detalleid])
+  //  useEffect(()=>{
+  //   getList()
+  //   .then((res)=> setData(res.find((item)=> item.id === parseInt(detalleid))))
+  //  },[detalleid])
 
 
   return (
