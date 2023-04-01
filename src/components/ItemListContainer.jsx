@@ -4,6 +4,8 @@ import ItemList from './ItemList';
 import Loader from './Loader';
 import getList from './utils/getProducts';
 import { useParams } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 const ItemListContainer = ({ greeting }) => {
 
@@ -14,16 +16,19 @@ const ItemListContainer = ({ greeting }) => {
 
     useEffect(() => {
         setLoading(true)
-        getList()
-            .then((res) => {
-                if (cilindradaId) {
-                    setArrayList(res.filter((item) => item.cilindrada === cilindradaId));
-                } else {
-                    setArrayList(res);
-                }
-            })
-            .catch((error) => console.log(error))
-            .finally(() => setLoading(false));
+        const coleccionProductos= cilindradaId? query(collection(db, "products"), where("cilindrada", "==", cilindradaId)) : collection(db, "products")
+        getDocs(coleccionProductos)
+        .then((result)=> {
+          const lista = result.docs.map((producto)=>{
+            return{
+              id:producto.id,
+              ...producto.data()
+            }
+          })
+          setArrayList(lista)
+        })
+        .catch((error)=> console.log(error))
+        .finally(()=> setLoading(false))
     }, [cilindradaId]);
 
 
