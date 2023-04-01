@@ -6,6 +6,8 @@ import ItemCart from './ItemCart';
 const Cart = () => {
   const {cart, totalPrice} = useCartContext();
 
+
+
   if (cart.length === 0) {
     return (
       <>
@@ -25,6 +27,7 @@ const Cart = () => {
         Total: {totalPrice()}
       </p>
     </div>
+    
   )
 }
 

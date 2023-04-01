@@ -1,5 +1,8 @@
 //cONTIENE LOS PRODUCTOS
+import { getFirestore, doc, getDoc} from 'firebase/firestore'
+import { useEffect } from 'react';
 
+/*
 const products = [
     {
         id:1,
@@ -58,5 +61,16 @@ const getList = () => {
         }, 2000);
     })
 }
+*/
+/*
+const getList = () =>{
+useEffect (() => {
+    const querydb = getFirestore();
+    const queryDoc = doc(querydb, 'products', '1akydDdBfuFmw8KbWpas' )
+    getDoc (queryDoc)
+    .then(getList)
+}, [])
+}
+*/
 
 export default getList;
