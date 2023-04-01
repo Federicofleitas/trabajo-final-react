@@ -5,6 +5,10 @@ import ItemCount from './ItemCount';
 import { CartContext } from '../context/CartContext';
 import { ItemDetail } from './ItemDetail';
 import getList from './utils/getProducts';
+import { getFirestore, doc, getDoc} from 'firebase/firestore'
+
+
+
 
 
 const ItemDetailContainer = () => {
