@@ -1,6 +1,6 @@
 Proyecto de Trabajo Final de React
 
-Este es un proyecto creado como parte del Trabajo Final de React para el curso de Desarrollo Web de CoderHouse.
+Este es un proyecto creado por Federico Fleitas para la entrega final del curso de React de CoderHouse.
 
 Descripción
 
