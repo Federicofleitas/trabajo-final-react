@@ -1,32 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext'
 import ItemCart from './ItemCart';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import CheckoutForm from './CheckoutForm';
+
+
 
 const Cart = () => {
   const {cart, totalPrice} = useCartContext();
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
 //Creacion de orden de compra en firestore
-  const order = {
-    buyer: {
-      name:'Federico',
-      email:'emaildeprueba@hotmail.com',
-      phone:'1144335533',
-      address:'Direccion de prueba 64553'
-    },
-    items:cart.map(product => ({ id:product.id, title: product.title, price: product.price, quantity: product.quantity })),
-    total:totalPrice(),
-  }
+const [order, setOrder] = useState({
+  buyer: {
+    firstname: '',
+    lastname: '',
+    address: '',
+    document: '',
+    creditcard: '',
+    expiration: '',
+  },
+  items: [],
+  total: 0,
+});
 
 
-  const handleClick = () => {
+  const handleClick = (orderData) => {
     
     const db = getFirestore()
     const orderCollection = collection(db, 'orders' )
-    addDoc(orderCollection, order)
+    const newOrder = {
+      ...order,
+      buyer: {
+        firstname: orderData.firstname,
+        lastname: orderData.lastname,
+        address: orderData.address,
+        document: orderData.document,
+        creditcard: orderData.creditcard,
+        expiration: orderData.expiration,
+      },
+      items: cart.map(product => ({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        quantity: product.quantity
+      })),
+      total: totalPrice(),
+    };
+    
+    addDoc(orderCollection, newOrder)
     .then(({id}) => console.log(id))
-    alert("Tu compra ah sido enviada a nuestra base de datos. Muchas gracias.")
+    alert("Tu compra ah sido enviada a nuestra base de datos. Muchas gracias.");
+    window.location.href = "/";
+    setShowCheckoutForm(true)
     
     }
 
@@ -44,16 +71,26 @@ const Cart = () => {
 
   return (
     <div>
-      {
-        cart.map(product => <ItemCart key={product.id} product={product}/>)
-      }
-      <p>
-        Total: {totalPrice()}
-      </p>
-      <button onClick={handleClick}>Realizar compra</button>
+      {showCheckoutForm ? (
+        <CheckoutForm handleClick={handleClick} />
+      ) : (
+        <>
+          {cart.length === 0 ? (
+            <>
+              <p>El carrito está vacío</p>
+              <Link to='/'>Seguir comprando</Link>
+            </>
+          ) : (
+            <>
+              {cart.map(product => <ItemCart key={product.id} product={product} />)}
+              <p>Total: {totalPrice()}</p>
+              <button onClick={() => setShowCheckoutForm(true)}>Realizar compra</button>
+            </>
+          )}
+        </>
+      )}
     </div>
-    
-  )
+  );
 }
 
-export default Cart
+export default Cart;
